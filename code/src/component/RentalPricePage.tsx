@@ -1,6 +1,7 @@
 import type { Plays } from "../repository/plays.ts";
 import type { Invoice } from "../repository/invoices.ts";
 import { statement } from "../service/VideoRentalCalculator.ts";
+import { useMemo } from "react";
 
 type RentalPricePageProps = {
   videoRentalCalculator: typeof statement;
@@ -13,7 +14,12 @@ export function RentalPricePage({
   invoicesData,
   playsData,
 }: RentalPricePageProps) {
-  const result = videoRentalCalculator(invoicesData, playsData);
+  // useMemo で statement をメモ化
+  const result = useMemo(
+    () => videoRentalCalculator(invoicesData, playsData),
+    [videoRentalCalculator, invoicesData, playsData],
+  );
+
   const formattedResult = result.split("\n").map((line, index) => (
     <span key={index}>
       {line}
