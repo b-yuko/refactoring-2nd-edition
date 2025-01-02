@@ -1,5 +1,5 @@
 import { describe, expect } from "vitest";
-import { VideoRentalCalculatorImpl } from "./VideoRentalCalculator.ts";
+import { statement } from "./VideoRentalCalculator"; // 関数をインポート
 import { Invoice } from "../repository/invoices.ts";
 import { Plays } from "../repository/plays.ts";
 
@@ -38,24 +38,16 @@ const realDataInvoices: Invoice[] = [
   },
 ];
 
-describe("本物と同じ値でテストする", () => {
-  const videoRentalCalculator = new VideoRentalCalculatorImpl();
-
+describe("関数型バージョンでテスト", () => {
   test("正常なステートメントが返されること", () => {
-    const result = videoRentalCalculator.statement(
-      realDataInvoices,
-      realDataPlays,
-    );
+    const result = statement(realDataInvoices, realDataPlays);
 
     // 結果が文字列であることを確認
     expect(result).toBeTypeOf("string");
   });
 
   test("異なる種類の演劇が計算されること", () => {
-    const result = videoRentalCalculator.statement(
-      realDataInvoices,
-      realDataPlays,
-    );
+    const result = statement(realDataInvoices, realDataPlays);
 
     // 演劇ごとに期待される料金が計算されているか確認
     // Hamlet の料金計算
@@ -67,20 +59,14 @@ describe("本物と同じ値でテストする", () => {
   });
 
   test("合計金額が正しく計算されること", () => {
-    const result = videoRentalCalculator.statement(
-      realDataInvoices,
-      realDataPlays,
-    );
+    const result = statement(realDataInvoices, realDataPlays);
 
     // 合計金額が正しく計算されているか確認
     expect(result).toContain("Amount owed is $1,730.00");
   });
 
   test("ボリューム特典ポイントが正しく計算されること", () => {
-    const result = videoRentalCalculator.statement(
-      realDataInvoices,
-      realDataPlays,
-    );
+    const result = statement(realDataInvoices, realDataPlays);
 
     // ボリューム特典が正しく計算されているか確認
     expect(result).toContain("You earned 47 creditsin");

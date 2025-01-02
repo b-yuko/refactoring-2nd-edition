@@ -1,9 +1,9 @@
-import type { VideoRentalCalculator } from "../service/VideoRentalCalculator.ts";
 import type { Plays } from "../repository/plays.ts";
 import type { Invoice } from "../repository/invoices.ts";
+import { statement } from "../service/VideoRentalCalculator.ts";
 
 type RentalPricePageProps = {
-  videoRentalCalculator: VideoRentalCalculator;
+  videoRentalCalculator: typeof statement;
   invoicesData: Invoice[];
   playsData: Plays;
 };
@@ -13,7 +13,7 @@ export function RentalPricePage({
   invoicesData,
   playsData,
 }: RentalPricePageProps) {
-  const result = videoRentalCalculator.statement(invoicesData, playsData);
+  const result = videoRentalCalculator(invoicesData, playsData);
   const formattedResult = result.split("\n").map((line, index) => (
     <span key={index}>
       {line}
