@@ -1,5 +1,5 @@
-import type { Invoice } from "../repository/invoices.ts";
-import type { Plays } from "../repository/plays.ts";
+import type { Invoice, Performance } from "../repository/invoices.ts";
+import type { Play, Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice[], plays: Plays): string {
   let totalAmount = 0;
@@ -14,8 +14,26 @@ export function statement(invoices: Invoice[], plays: Plays): string {
 
   for (const perf of invoices[0].performances) {
     const play = plays[perf.playID];
-    let thisAmount = 0;
+    const thisAmount = amountFor(perf, play);
 
+    // ボリューム特典のポイントを加算
+    volumeCredits += Math.max(perf.audience - 30, 0);
+
+    // 喜劇のときは10人につき、さらにポイントを加算
+    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
+
+    // 注文の内訳を出力
+    result += `${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats) \n`;
+    totalAmount += thisAmount;
+  }
+
+  result += `Amount owed is ${format(totalAmount / 100)} \n`;
+  result += `You earned ${volumeCredits} creditsin \n`;
+
+  return result;
+
+  function amountFor(perf: Performance, play: Play) {
+    let thisAmount = 0;
     switch (play.type) {
       case "tragedy":
         thisAmount = 40000;
@@ -33,20 +51,6 @@ export function statement(invoices: Invoice[], plays: Plays): string {
       default:
         throw new Error("unknown type: $(play.type}");
     }
-
-    // ボリューム特典のポイントを加算
-    volumeCredits += Math.max(perf.audience - 30, 0);
-
-    // 喜劇のときは10人につき、さらにポイントを加算
-    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
-
-    // 注文の内訳を出力
-    result += `${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats) \n`;
-    totalAmount += thisAmount;
+    return thisAmount;
   }
-
-  result += `Amount owed is ${format(totalAmount / 100)} \n`;
-  result += `You earned ${volumeCredits} creditsin \n`;
-
-  return result;
 }
