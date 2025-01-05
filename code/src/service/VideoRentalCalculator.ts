@@ -13,7 +13,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   }).format;
 
   for (const perf of invoices[0].performances) {
-    const play = plays[perf.playID];
+    const play = playFor(perf);
     const thisAmount = amountFor(perf, play);
 
     // ボリューム特典のポイントを加算
@@ -52,5 +52,9 @@ export function statement(invoices: Invoice[], plays: Plays): string {
         throw new Error("unknown type: $(play.type}");
     }
     return result;
+  }
+
+  function playFor(aPerformance: Performance) {
+    return plays[aPerformance.playID];
   }
 }
