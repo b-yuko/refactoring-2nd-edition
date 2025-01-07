@@ -69,6 +69,6 @@ describe("関数型バージョンでテスト", () => {
     const result = statement(realDataInvoices, realDataPlays);
 
     // ボリューム特典が正しく計算されているか確認
-    expect(result).toContain("You earned 47 creditsin");
+    expect(result).toContain("You earned 47 credits");
   });
 });

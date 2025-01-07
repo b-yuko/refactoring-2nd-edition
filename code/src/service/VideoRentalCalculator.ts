@@ -1,5 +1,5 @@
 import type { Invoice, Performance } from "../repository/invoices.ts";
-import type { Play, Plays } from "../repository/plays.ts";
+import type { Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice[], plays: Plays): string {
   let totalAmount = 0;
@@ -13,7 +13,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   }).format;
 
   for (const perf of invoices[0].performances) {
-    const thisAmount = amountFor(perf, playFor(perf));
+    const thisAmount = amountFor(perf);
 
     // ボリューム特典のポイントを加算
     volumeCredits += Math.max(perf.audience - 30, 0);
@@ -28,13 +28,13 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   }
 
   result += `Amount owed is ${format(totalAmount / 100)} \n`;
-  result += `You earned ${volumeCredits} creditsin \n`;
+  result += `You earned ${volumeCredits} credits \n`;
 
   return result;
 
-  function amountFor(aPerformance: Performance, play: Play) {
+  function amountFor(aPerformance: Performance) {
     let result = 0;
-    switch (play.type) {
+    switch (playFor(aPerformance).type) {
       case "tragedy":
         result = 40000;
         if (aPerformance.audience > 30) {
@@ -49,7 +49,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
         result += 300 * aPerformance.audience;
         break;
       default:
-        throw new Error("unknown type: $(play.type}");
+        throw new Error(`unknown type: ${playFor(aPerformance).type}`);
     }
     return result;
   }
