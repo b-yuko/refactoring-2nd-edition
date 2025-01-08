@@ -51,14 +51,14 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     return plays[aPerformance.playID];
   }
 
-  function volumeCreditsFor(perf: Performance){
-    let volumeCredits = 0
+  function volumeCreditsFor(aPerformance: Performance){
+    let result = 0
 
-    volumeCredits += Math.max(perf.audience - 30, 0);
+    result += Math.max(aPerformance.audience - 30, 0);
 
-    if ("comedy" === playFor(perf).type)
-      volumeCredits += Math.floor(perf.audience / 5)
+    if ("comedy" === playFor(aPerformance).type)
+      result += Math.floor(aPerformance.audience / 5)
 
-    return volumeCredits
+    return result
   }
 }
