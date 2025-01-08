@@ -6,12 +6,6 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   let volumeCredits = 0;
   let result = `Statement for ${invoices[0].customer} \n`;
 
-  const format = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format;
-
   for (const perf of invoices[0].performances) {
     volumeCredits += volumeCreditsFor(perf)
 
@@ -60,5 +54,13 @@ export function statement(invoices: Invoice[], plays: Plays): string {
       result += Math.floor(aPerformance.audience / 5)
 
     return result
+  }
+
+  function format(aNumber: number){
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(aNumber);
   }
 }
