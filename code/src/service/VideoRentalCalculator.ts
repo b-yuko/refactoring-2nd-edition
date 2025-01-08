@@ -13,12 +13,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   }).format;
 
   for (const perf of invoices[0].performances) {
-    // ボリューム特典のポイントを加算
-    volumeCredits += Math.max(perf.audience - 30, 0);
-
-    // 喜劇のときは10人につき、さらにポイントを加算
-    if ("comedy" === playFor(perf).type)
-      volumeCredits += Math.floor(perf.audience / 5);
+    volumeCredits += volumeCreditsFor(perf)
 
     // 注文の内訳を出力
     result += `${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${perf.audience} seats) \n`;
@@ -54,5 +49,16 @@ export function statement(invoices: Invoice[], plays: Plays): string {
 
   function playFor(aPerformance: Performance) {
     return plays[aPerformance.playID];
+  }
+
+  function volumeCreditsFor(perf: Performance){
+    let volumeCredits = 0
+
+    volumeCredits += Math.max(perf.audience - 30, 0);
+
+    if ("comedy" === playFor(perf).type)
+      volumeCredits += Math.floor(perf.audience / 5)
+
+    return volumeCredits
   }
 }
