@@ -7,11 +7,13 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   let result = `Statement for ${invoices[0].customer} \n`;
 
   for (const perf of invoices[0].performances) {
-    volumeCredits += volumeCreditsFor(perf)
-
     // 注文の内訳を出力
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n`;
     totalAmount += amountFor(perf);
+  }
+
+  for (const perf of invoices[0].performances) {
+    volumeCredits += volumeCreditsFor(perf)
   }
 
   result += `Amount owed is ${usd(totalAmount)} \n`;
