@@ -11,10 +11,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     totalAmount += amountFor(perf);
   }
 
-  let volumeCredits = 0;
-  for (const perf of invoices[0].performances) {
-    volumeCredits += volumeCreditsFor(perf)
-  }
+  const volumeCredits = totalVolumeCredits()
 
   result += `Amount owed is ${usd(totalAmount)} \n`;
   result += `You earned ${volumeCredits} credits \n`;
@@ -64,5 +61,14 @@ export function statement(invoices: Invoice[], plays: Plays): string {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(aNumber / 100);
+  }
+
+  function totalVolumeCredits(){
+    let volumeCredits = 0;
+    for (const perf of invoices[0].performances) {
+      volumeCredits += volumeCreditsFor(perf)
+    }
+
+    return volumeCredits
   }
 }
