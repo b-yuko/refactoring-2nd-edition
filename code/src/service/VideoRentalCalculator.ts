@@ -3,7 +3,6 @@ import type { Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice[], plays: Plays): string {
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `Statement for ${invoices[0].customer} \n`;
 
   for (const perf of invoices[0].performances) {
@@ -12,6 +11,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     totalAmount += amountFor(perf);
   }
 
+  let volumeCredits = 0;
   for (const perf of invoices[0].performances) {
     volumeCredits += volumeCreditsFor(perf)
   }
