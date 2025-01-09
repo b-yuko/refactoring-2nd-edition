@@ -11,10 +11,8 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     totalAmount += amountFor(perf);
   }
 
-  const volumeCredits = totalVolumeCredits()
-
   result += `Amount owed is ${usd(totalAmount)} \n`;
-  result += `You earned ${volumeCredits} credits \n`;
+  result += `You earned ${totalVolumeCredits()} credits \n`;
 
   return result;
 
@@ -37,6 +35,7 @@ export function statement(invoices: Invoice[], plays: Plays): string {
       default:
         throw new Error(`unknown type: ${playFor(aPerformance).type}`);
     }
+
     return result;
   }
 
