@@ -2,14 +2,12 @@ import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice[], plays: Plays): string {
-  let totalAmount = 0;
   let result = `Statement for ${invoices[0].customer} \n`;
-
   for (const perf of invoices[0].performances) {
-    // 注文の内訳を出力
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n`;
-    totalAmount += amountFor(perf);
   }
+
+  const totalAmount = appleSauce();
 
   result += `Amount owed is ${usd(totalAmount)} \n`;
   result += `You earned ${totalVolumeCredits()} credits \n`;
@@ -69,5 +67,13 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     }
 
     return volumeCredits
+  }
+
+  function appleSauce(){
+    let totalAmount = 0
+    for(const perf of invoices[0].performances){
+      totalAmount += amountFor(perf)
+    }
+    return totalAmount
   }
 }
