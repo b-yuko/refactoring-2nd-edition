@@ -59,19 +59,19 @@ export function statement(invoices: Invoice[], plays: Plays): string {
   }
 
   function totalVolumeCredits(){
-    let volumeCredits = 0;
+    let result = 0;
     for (const perf of invoices[0].performances) {
-      volumeCredits += volumeCreditsFor(perf)
+      result += volumeCreditsFor(perf)
     }
 
-    return volumeCredits
+    return result
   }
 
   function totalAmount(){
-    let totalAmount = 0
+    let result = 0
     for(const perf of invoices[0].performances){
-      totalAmount += amountFor(perf)
+      result += amountFor(perf)
     }
-    return totalAmount
+    return result
   }
 }
