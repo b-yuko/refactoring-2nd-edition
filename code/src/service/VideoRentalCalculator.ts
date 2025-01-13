@@ -1,9 +1,9 @@
 import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
-export function statement(invoices: Invoice[], plays: Plays): string {
-  let result = `Statement for ${invoices[0].customer} \n`;
-  for (const perf of invoices[0].performances) {
+export function statement(invoices: Invoice, plays: Plays): string {
+  let result = `Statement for ${invoices.customer} \n`;
+  for (const perf of invoices.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n`;
   }
 
@@ -39,18 +39,18 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     return plays[aPerformance.playID];
   }
 
-  function volumeCreditsFor(aPerformance: Performance){
-    let result = 0
+  function volumeCreditsFor(aPerformance: Performance) {
+    let result = 0;
 
     result += Math.max(aPerformance.audience - 30, 0);
 
     if ("comedy" === playFor(aPerformance).type)
-      result += Math.floor(aPerformance.audience / 5)
+      result += Math.floor(aPerformance.audience / 5);
 
-    return result
+    return result;
   }
 
-  function usd(aNumber: number){
+  function usd(aNumber: number) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
@@ -58,20 +58,20 @@ export function statement(invoices: Invoice[], plays: Plays): string {
     }).format(aNumber / 100);
   }
 
-  function totalVolumeCredits(){
+  function totalVolumeCredits() {
     let result = 0;
-    for (const perf of invoices[0].performances) {
-      result += volumeCreditsFor(perf)
+    for (const perf of invoices.performances) {
+      result += volumeCreditsFor(perf);
     }
 
-    return result
+    return result;
   }
 
-  function totalAmount(){
-    let result = 0
-    for(const perf of invoices[0].performances){
-      result += amountFor(perf)
+  function totalAmount() {
+    let result = 0;
+    for (const perf of invoices.performances) {
+      result += amountFor(perf);
     }
-    return result
+    return result;
   }
 }
