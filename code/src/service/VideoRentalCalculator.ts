@@ -2,6 +2,10 @@ import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice, plays: Plays): string {
+  return renderPlainText(invoices, plays)
+}
+
+function renderPlainText(invoices: Invoice, plays: Plays){
   let result = `Statement for ${invoices.customer} \n`;
   for (const perf of invoices.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n`;
