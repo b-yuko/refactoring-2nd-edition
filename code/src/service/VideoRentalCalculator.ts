@@ -2,11 +2,13 @@ import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice, plays: Plays): string {
-  return renderPlainText(invoices, plays)
+  const statementData: Invoice = {} as Invoice
+  statementData.customer = invoices.customer
+  return renderPlainText(statementData, invoices, plays)
 }
 
-function renderPlainText(invoices: Invoice, plays: Plays){
-  let result = `Statement for ${invoices.customer} \n`;
+function renderPlainText(data: Invoice, invoices: Invoice, plays: Plays){
+  let result = `Statement for ${data.customer} \n`;
   for (const perf of invoices.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n`;
   }
