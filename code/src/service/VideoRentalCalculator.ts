@@ -2,14 +2,15 @@ import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
 export function statement(invoices: Invoice, plays: Plays): string {
-  const statementData: Invoice = {} as Invoice
-  statementData.customer = invoices.customer
-  return renderPlainText(statementData, invoices, plays)
+  const statementData: Invoice = {} as Invoice;
+  statementData.customer = invoices.customer;
+  statementData.performances = invoices.performances;
+  return renderPlainText(statementData, plays);
 }
 
-function renderPlainText(data: Invoice, invoices: Invoice, plays: Plays){
+function renderPlainText(data: Invoice, plays: Plays) {
   let result = `Statement for ${data.customer} \n`;
-  for (const perf of invoices.performances) {
+  for (const perf of data.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n`;
   }
 
@@ -66,7 +67,7 @@ function renderPlainText(data: Invoice, invoices: Invoice, plays: Plays){
 
   function totalVolumeCredits() {
     let result = 0;
-    for (const perf of invoices.performances) {
+    for (const perf of data.performances) {
       result += volumeCreditsFor(perf);
     }
 
@@ -75,7 +76,7 @@ function renderPlainText(data: Invoice, invoices: Invoice, plays: Plays){
 
   function totalAmount() {
     let result = 0;
-    for (const perf of invoices.performances) {
+    for (const perf of data.performances) {
       result += amountFor(perf);
     }
     return result;
