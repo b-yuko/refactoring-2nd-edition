@@ -1,10 +1,10 @@
 import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
-export function statement(invoices: Invoice, plays: Plays): string {
+export function statement(invoices: Invoice[], plays: Plays): string {
   const statementData: Invoice = {} as Invoice;
-  statementData.customer = invoices.customer;
-  statementData.performances = invoices.performances;
+  statementData.customer = invoices[0].customer;
+  statementData.performances = invoices[0].performances;
   return renderPlainText(statementData, plays);
 }
 

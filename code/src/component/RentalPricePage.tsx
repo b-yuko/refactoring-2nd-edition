@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 type RentalPricePageProps = {
   videoRentalCalculator: typeof statement;
-  invoicesData: Invoice;
+  invoicesData: Invoice[];
   playsData: Plays;
 };
 

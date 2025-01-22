@@ -8,20 +8,22 @@ export type Invoice = {
   performances: Performance[];
 };
 
-export const invoices: Invoice = {
-  customer: "BigCo",
-  performances: [
-    {
-      playID: "hamlet",
-      audience: 55,
-    },
-    {
-      playID: "asLike",
-      audience: 35,
-    },
-    {
-      playID: "othello",
-      audience: 40,
-    },
-  ],
-};
+export const invoices: Invoice[] = [
+  {
+    customer: "BigCo",
+    performances: [
+      {
+        playID: "hamlet",
+        audience: 55,
+      },
+      {
+        playID: "asLike",
+        audience: 35,
+      },
+      {
+        playID: "othello",
+        audience: 40,
+      },
+    ],
+  },
+];

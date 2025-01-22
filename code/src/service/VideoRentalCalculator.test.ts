@@ -18,23 +18,25 @@ const realDataPlays: Plays = {
   },
 };
 
-const realDataInvoices: Invoice = {
-  customer: "BigCo",
-  performances: [
-    {
-      playID: "hamlet",
-      audience: 55,
-    },
-    {
-      playID: "asLike",
-      audience: 35,
-    },
-    {
-      playID: "othello",
-      audience: 40,
-    },
-  ],
-};
+const realDataInvoices: Invoice[] = [
+  {
+    customer: "BigCo",
+    performances: [
+      {
+        playID: "hamlet",
+        audience: 55,
+      },
+      {
+        playID: "asLike",
+        audience: 35,
+      },
+      {
+        playID: "othello",
+        audience: 40,
+      },
+    ],
+  },
+];
 
 describe("関数型バージョンでテスト", () => {
   test("正常なステートメントが返されること", () => {
