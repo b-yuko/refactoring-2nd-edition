@@ -4,8 +4,13 @@ import type { Plays } from "../repository/plays.ts";
 export function statement(invoices: Invoice[], plays: Plays): string {
   const statementData: Invoice = {} as Invoice;
   statementData.customer = invoices[0].customer;
-  statementData.performances = invoices[0].performances;
+  statementData.performances = invoices[0].performances.map(enrichPerformance);
   return renderPlainText(statementData, plays);
+
+  function enrichPerformance(aPerformance: Performance) {
+    const result = Object.assign({}, aPerformance);
+    return result;
+  }
 }
 
 function renderPlainText(data: Invoice, plays: Plays) {
