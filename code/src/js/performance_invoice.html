@@ -46,7 +46,7 @@
     }).format;
 
     for (const perf of invoices[0].performances) {
-      const play = plays[perf.playID];
+      const play = playFor(perf);
       let thisAmount = amountFor(perf, play);
 
       // ボリューム特典のポイントを加算
@@ -65,6 +65,10 @@
     result += `You earned ${volumeCredits} credits \n`;
 
     return result;
+  }
+
+  function playFor(aPerformance) {
+    return plays[aPerformance.playID];
   }
 
   function amountFor(aPerformance, play) {
