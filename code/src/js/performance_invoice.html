@@ -46,7 +46,7 @@
     }).format;
 
     for (const perf of invoices[0].performances) {
-      volumeCredits += volumeCreditsFor(perf)
+      volumeCredits += volumeCreditsFor(perf);
 
       // 注文の内訳を出力
       result += `  ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${perf.audience} seats) \n`;
@@ -59,15 +59,15 @@
     return result;
   }
 
-  function volumeCreditsFor(perf) {
-    let volumeCredits = 0;
+  function volumeCreditsFor(aPerformance) {
+    let result = 0;
 
-    volumeCredits += Math.max(perf.audience - 30, 0);
+    result += Math.max(aPerformance.audience - 30, 0);
 
-    if ("comedy" === playFor(perf).type)
-      volumeCredits += Math.floor(perf.audience / 5);
+    if ("comedy" === playFor(aPerformance).type)
+      result += Math.floor(aPerformance.audience / 5);
 
-    return volumeCredits;
+    return result;
   }
 
   function playFor(aPerformance) {
