@@ -1,6 +1,9 @@
+import { Play } from "./plays.ts";
+
 export type Performance = {
   playID: string;
   audience: number;
+  play?: Play;
 };
 
 export type Invoice = {

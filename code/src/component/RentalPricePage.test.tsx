@@ -11,7 +11,7 @@ describe("RentalPricePage", () => {
     render(
       <RentalPricePage
         videoRentalCalculator={mockStatement}
-        invoicesData={invoices}
+        invoicesData={invoices[0]}
         playsData={plays}
       />,
     );
@@ -25,13 +25,13 @@ describe("RentalPricePage", () => {
     render(
       <RentalPricePage
         videoRentalCalculator={mockStatement}
-        invoicesData={invoices}
+        invoicesData={invoices[0]}
         playsData={plays}
       />,
     );
 
     // THEN
-    expect(mockStatement).toHaveBeenCalledWith(invoices, plays);
+    expect(mockStatement).toHaveBeenCalledWith(invoices[0], plays);
   });
 
   test("ステートメントが複数行で正しく表示されること", () => {
@@ -41,7 +41,7 @@ describe("RentalPricePage", () => {
     render(
       <RentalPricePage
         videoRentalCalculator={mockMultiLineStatement}
-        invoicesData={invoices}
+        invoicesData={invoices[0]}
         playsData={plays}
       />,
     );
@@ -57,7 +57,7 @@ describe("RentalPricePage", () => {
     const { rerender } = render(
       <RentalPricePage
         videoRentalCalculator={mockStatementOnce}
-        invoicesData={invoices}
+        invoicesData={invoices[0]}
         playsData={plays}
       />,
     );
@@ -69,7 +69,7 @@ describe("RentalPricePage", () => {
     rerender(
       <RentalPricePage
         videoRentalCalculator={mockStatementOnce}
-        invoicesData={invoices}
+        invoicesData={invoices[0]}
         playsData={plays}
       />,
     );

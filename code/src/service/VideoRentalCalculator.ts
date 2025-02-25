@@ -1,21 +1,17 @@
 import type { Invoice, Performance } from "../repository/invoices.ts";
 import type { Plays } from "../repository/plays.ts";
 
-interface PerformanceWithPlay extends Performance {
-  play: Plays[keyof Plays];
-}
+export function statement(invoice: Invoice, plays: Plays) {
+  const statementData = {
+    customer: invoice.customer,
+    performances: invoice.performances.map(enrichPerformance),
+  };
 
-export function statement(invoices: Invoice[], plays: Plays): string {
-  const statementData: Invoice = {} as Invoice;
-  statementData.customer = invoices[0].customer;
-  statementData.performances = invoices[0].performances.map(enrichPerformance);
   return renderPlainText(statementData, plays);
 
-  function enrichPerformance(aPerformance: Performance): PerformanceWithPlay {
-    const result: PerformanceWithPlay = {
-      ...aPerformance,
-      play: playFor(aPerformance),
-    };
+  function enrichPerformance(aPerformance: Performance) {
+    const result = Object.assign({}, aPerformance);
+    result.play = playFor(result);
     return result;
   }
 
