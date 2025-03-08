@@ -11,7 +11,7 @@ describe("RentalPricePage", () => {
     render(
       <RentalPricePage
         videoRentalCalculator={mockStatement}
-        invoicesData={invoices[0]}
+        invoicesData={invoices}
         playsData={plays}
       />,
     );
@@ -25,7 +25,7 @@ describe("RentalPricePage", () => {
     render(
       <RentalPricePage
         videoRentalCalculator={mockStatement}
-        invoicesData={invoices[0]}
+        invoicesData={invoices}
         playsData={plays}
       />,
     );
@@ -41,7 +41,7 @@ describe("RentalPricePage", () => {
     render(
       <RentalPricePage
         videoRentalCalculator={mockMultiLineStatement}
-        invoicesData={invoices[0]}
+        invoicesData={invoices}
         playsData={plays}
       />,
     );
@@ -57,7 +57,7 @@ describe("RentalPricePage", () => {
     const { rerender } = render(
       <RentalPricePage
         videoRentalCalculator={mockStatementOnce}
-        invoicesData={invoices[0]}
+        invoicesData={invoices}
         playsData={plays}
       />,
     );
@@ -69,7 +69,7 @@ describe("RentalPricePage", () => {
     rerender(
       <RentalPricePage
         videoRentalCalculator={mockStatementOnce}
-        invoicesData={invoices[0]}
+        invoicesData={invoices}
         playsData={plays}
       />,
     );
