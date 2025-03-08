@@ -45,7 +45,6 @@
       const result = Object.assign({}, aPerformance);
       result.play = playFor(result);
       result.amount = amountFor(result);
-      console.log("result: ", result);
       return result;
     }
 
@@ -91,7 +90,6 @@
       for (let perf of data.performances) {
         result += perf.amount;
       }
-      console.log("totalAmount: ", result);
       return result;
     }
 
